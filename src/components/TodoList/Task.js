@@ -12,8 +12,13 @@ import DeleteIcon from '@material-ui/icons/Delete';
 const styles = theme => ({
   root: {
     width: '100%',
-    padding: `${theme.spacing(2)}px ${theme.spacing(3)}px`,
-    margin: `${theme.spacing(1)}px 0`
+    padding: `${theme.spacing(1)}px ${theme.spacing(3)}px`,
+    margin: `${theme.spacing(1)}px 0`,
+    display: 'flex',
+    alignItems: 'center'
+  },
+  deleteButton: {
+    marginLeft: 'auto'
   }
 });
 
@@ -41,15 +46,17 @@ class TodoListItem extends Component {
         <Checkbox
           color="primary"
           inputProps={{ 'aria-label': 'secondary checkbox' }}
+          checked={this.props.task.completed}
+          disabled={this.props.task.completed}
           onChange={this.onMarkTaskAsCompleted}
         />
         {this.props.task.name}
         <IconButton
           aria-label="delete"
-          className={classes.margin}
+          className={classes.deleteButton}
           onClick={this.onRemoveTask}
         >
-          <DeleteIcon fontSize="small"/>
+          <DeleteIcon fontSize="small" color="secondary" />
         </IconButton>
       </Paper>
     );
@@ -64,4 +71,10 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(actions, dispatch)
 };
 
-export default connect(null, mapDispatchToProps)(withStyles(styles)(TodoListItem));
+const mapStateToProps = ({ TodoList }, ownProps) => {
+  return {
+    task: TodoList.tasks.find(task => task.hash === ownProps.hash)
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(TodoListItem));

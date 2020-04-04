@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import autoBind from 'react-autobind';
 import { withStyles } from '@material-ui/core/styles';
-import TodoListItem from '@components/TodoList/Item'
+import TodoListTask from '@components/TodoList/Task'
 import { connect } from "react-redux";
 import { isEmptyArray } from '@helpers'
 import Typography from "@material-ui/core/Typography";
@@ -58,7 +58,7 @@ class TodoListItems extends Component {
                   You have no {list.name} tasks yet
                 </Typography>
                 : list.items.map(task => (
-                  <TodoListItem task={task} key={task.hash}/>
+                  <TodoListTask hash={task.hash} key={task.hash}/>
                 ))
             }
           </section>
