@@ -9,9 +9,9 @@ const reducers = combineReducers({
   TodoList: TodoListReducer
 });
 
-const sagas = function* () {
+function* sagas () {
   yield all([
-    TodoListSaga
+    TodoListSaga()
   ]);
 };
 
